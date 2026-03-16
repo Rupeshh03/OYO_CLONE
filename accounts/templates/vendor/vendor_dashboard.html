@@ -1,0 +1,105 @@
+{% extends 'utils/vendor_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.hotel-img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    border-top-left-radius:8px;
+    border-top-right-radius:8px;
+}
+</style>
+
+<div class="container mt-5">
+     <div class="row mb-2">
+
+        <div class="col-md-6 text-start">
+            <a href="{% url 'add_hotel' %}" class="btn btn-success">
+                Add Hotel
+            </a>
+        </div>
+
+        <div class="col-md-6 text-end">
+            <a href="{% url 'hotel_bookings' %}" class="btn btn-danger">
+                Hotel Bookings
+            </a>
+        </div>
+
+    </div>
+    <!-- ================= HOTELS ================= -->
+    <h3 class="mb-3">Your Hotels</h3>
+
+    <div class="row">
+
+        {% for hotel in hotels %}
+        <div class="col-md-3 mb-4">
+
+            <div class="card shadow h-100">
+
+                {% if hotel.hotel_image %}
+                <img src="{{ hotel.hotel_image.url }}" class="hotel-img">
+                {% else %}
+                <img src="https://img.freepik.com/free-photo/type-entertainment-complex-popular-resort-with-pools-water-parks-turkey-with-more-than-5-million-visitors-year-amara-dolce-vita-luxury-hotel-resort-tekirova-kemer_146671-18728.jpg"
+                     class="hotel-img">
+                {% endif %}
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        {{ hotel.hotel_name }}
+                    </h5>
+
+                    <p class="card-text">
+                        {{ hotel.hotel_description|truncatewords:10 }}
+                    </p>
+
+                    <!-- Amenities -->
+                    <div class="mb-2">
+                        {% for ameneti in hotel.hotel_ameneties.all %}
+                        <span class="badge bg-primary">
+                            {{ ameneti.amenetie_name }}
+                        </span>
+                        {% empty %}
+                        <span class="text-danger">
+                            No amenities
+                        </span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between mt-3">
+
+                        <a href="{% url 'edit_hotel' hotel.id %}"
+                           class="btn btn-warning btn-sm">
+                           Edit
+                        </a>
+
+                        <a href="{% url 'my_bookings' %}"
+                           class="btn btn-primary btn-sm">
+                           View Details
+                        </a>
+
+                        <a href="{% url 'delete_hotel' hotel.id %}"
+                           class="btn btn-danger btn-sm">
+                           Delete
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        {% empty %}
+        <p>No hotels added yet.</p>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

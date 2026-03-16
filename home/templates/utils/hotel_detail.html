@@ -1,0 +1,88 @@
+{% extends 'utils/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5 pt-5">
+
+    <div class="row">
+
+        <!-- LEFT SIDE CONTENT -->
+        <div class="col-md-7">
+
+            <h3>HOTEL:- {{ hotel.hotel_name }}</h3>
+
+            <hr>
+
+            Price :
+            <span class="text-danger">
+                ₹{{ hotel.hotel_price }}
+            </span>
+
+            <br>
+
+            Offer Price :
+            <span class="badge bg-success">
+                ₹{{ hotel.hotel_offer_price }}
+            </span>
+
+            <hr>
+
+            Location :
+            <span class="badge bg-secondary">
+                {{ hotel.hotel_location }}
+            </span>
+
+            <hr>
+
+            <h5>Description</h5>
+            <p>
+                {{ hotel.hotel_description }}
+            </p>
+
+            <hr>
+
+            <h5>Amenities</h5>
+
+            <div>
+
+                {% for ameneti in hotel.hotel_ameneties.all %}
+
+                <span class="badge bg-primary">
+                    {{ ameneti.amenetie_name }}
+                </span>
+
+                {% empty %}
+
+                <span class="text-danger">
+                    No amenities
+                </span>
+
+                {% endfor %}
+
+            </div>
+            <a href="{% url 'book_hotel' hotel.id %}" class="btn btn-success mt-3">
+                Book Now
+            </a>
+        </div>
+
+
+        <!-- RIGHT SIDE IMAGE -->
+        <div class="col-md-5">
+
+            {% if hotel.hotel_image %}
+
+            <img src="{{ hotel.hotel_image.url }}" class="img-fluid rounded shadow">
+
+            {% else %}
+
+            <img src="{% static 'no_photo.avif' %}" class="img-fluid rounded shadow">
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

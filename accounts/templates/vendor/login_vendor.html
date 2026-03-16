@@ -1,0 +1,79 @@
+{% extends "utils/base.html" %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
+
+  <div class="col-md-5">
+
+    <h2 class="text-center text-dark mb-4">Vendor Login</h2>
+
+    <div class="card shadow">
+
+      <form method="post" class="card-body p-lg-4">
+
+        {% include 'utils/alerts.html' %}
+        {% csrf_token %}
+
+        <div class="text-center">
+          <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"
+               class="img-fluid img-thumbnail rounded-circle mb-3"
+               width="120"
+               alt="profile">
+        </div>
+
+        <div class="mb-3">
+          <input type="text"
+                 class="form-control"
+                 id="email"
+                 name="email"
+                 placeholder="Email or Username">
+        </div>
+
+        <div class="mb-3">
+          <input type="password"
+                 class="form-control"
+                 name="password"
+                 placeholder="Password">
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+          Login
+        </button>
+
+        <button type="button"
+                class="btn btn-outline-primary w-100 mb-3"
+                onclick="sendOtp()">
+          Login with OTP
+        </button>
+
+        <div class="text-center">
+          Not Registered?
+          <a href="{% url 'vendor_register' %}" class="fw-bold">
+            Create an Account
+          </a>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function sendOtp() {
+
+    var email = document.getElementById('email').value
+
+    if(email == ""){
+        alert("Email cannot be blank")
+        return
+    }
+
+    window.location.href = "/account/vendor-send-otp/" + email + "/"
+}
+</script>
+
+{% endblock %}

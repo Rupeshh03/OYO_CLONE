@@ -1,0 +1,37 @@
+{% extends "utils/base.html" %}
+
+{% block content %}
+
+<div class="container mt-2 pt-4 pb-5">
+  
+<div class="container">
+    <div class="row">
+      
+      <div class="col-md-6 offset-md-3">
+        <h2 class="text-center text-dark mt-5">Login Form</h2>
+        <div class="card my-5">
+
+          <form method="post" class="card-body cardbody-color p-lg-5">
+          {% include 'utils/alerts.html' %}
+          {% csrf_token %}
+            <div class="mb-3">
+              <input type="text" class="form-control" name="otp" placeholder="Enter OTP">
+              <button type="submit" class="btn btn-color px-5 mb-2 w-100">Verify OTP</button>
+            </div>
+            </div>
+          </form>
+        </div>
+</div>
+      </div>
+    </div>
+  </div>
+<script>
+    function sendOtp() {
+    var email = document.getElementById('email').value
+    if(email==""){
+      alert("Email Cannot be blank")
+    }
+    window.location.href = `/account/send-otp/${email}/`
+    }
+</script>
+{% endblock %}

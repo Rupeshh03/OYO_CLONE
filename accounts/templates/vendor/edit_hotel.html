@@ -1,0 +1,133 @@
+{% extends 'utils/vendor_base.html' %}
+
+{% block content %}
+
+<div class="container mt-5 pt-5 pb-5">
+
+    <div class="col-5 mx-auto card shadow p-4" style="border:none">
+
+        <h2>Edit Hotel</h2>
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% include 'utils/alerts.html' %}
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Hotel Name</label>
+
+                <input type="text" class="form-control" name="hotel_name" value="{{ hotel.hotel_name }}">
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">Current Image</label><br>
+
+                {% if hotel.hotel_image %}
+                <img src="{{ hotel.hotel_image.url }}" width="120" class="mb-2 rounded">
+                {% endif %}
+
+                <input type="file" class="form-control" name="hotel_image">
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">Description</label>
+
+                <input type="text" class="form-control" name="hotel_description" value="{{ hotel.hotel_description }}">
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">Hotel Location</label>
+
+                <input type="text" class="form-control" name="hotel_location" value="{{ hotel.hotel_location }}">
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">Hotel Price</label>
+
+                <input type="number" class="form-control" name="hotel_price" value="{{ hotel.hotel_price }}">
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">Hotel Offer Price</label>
+
+                <input type="number" class="form-control" name="hotel_offer_price"
+                    value="{{ hotel.hotel_offer_price }}">
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">Amenities</label>
+
+                <div class="row">
+
+                    {% for amenetie in ameneties %}
+
+                    <div class="col-md-4">
+
+                        <div class="form-check">
+
+                            <input class="form-check-input" type="checkbox" name="hotel_ameneties"
+                                value="{{ amenetie.id }}" id="amenetie{{ amenetie.id }}" {% if amenetie in
+                                hotel.hotel_ameneties.all %} checked {% endif %}>
+
+                            <label class="form-check-label">
+                                {{ amenetie.amenetie_name }}
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">Is Available</label>
+
+                <select class="form-select" name="is_available">
+
+                    <option value="True" {% if hotel.is_available %}selected{% endif %}>
+                        True
+                    </option>
+
+                    <option value="False" {% if not hotel.is_available %}selected{% endif %}>
+                        False
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">
+                Update Hotel
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img class="bg-white" src="/static/oyo.png"  alt="logo" width="30" height="24">
+    </a>
+
+    <!-- Toggle Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Menu -->
+    <div class="collapse navbar-collapse" id="navbarMenu">
+
+      <ul class="navbar-nav me-auto mb-3 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'home' %}">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'my_bookings' %}">My Bookings</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'vendor_dashboard' %}">Vendor Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="">About</a>
+        </li>
+      </ul>
+
+      <div class="d-flex">
+        {% if request.user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="btn btn-light me-2">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-light me-2">Login</a>
+          <a href="{% url 'register' %}" class="btn btn-dark">Register</a>
+        {% endif %}
+      </div>
+      
+    </div>
+
+  </div>
+</nav>

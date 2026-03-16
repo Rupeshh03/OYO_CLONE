@@ -1,0 +1,33 @@
+{% extends 'utils/home.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5 pt-5">
+
+    <h2>Book {{ hotel.hotel_name }}</h2>
+
+    <form method="POST" action="{% url 'book_hotel' hotel.id %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="hotel_id" value="{{ hotel.id }}">
+        <div class="mb-3"></div>
+        <div class="mb-3">
+            <label>Check-in Date</label>
+            <input type="date" name="start_date" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Check-out Date</label>
+            <input type="date" name="end_date" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Book Now
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

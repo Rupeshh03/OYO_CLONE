@@ -1,0 +1,143 @@
+{% extends 'utils/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5 pt-5 mb-5">
+
+    <div class="row">
+
+        {% for hotel in hotels %}
+
+        <div class="col-md-3 mb-4">
+
+            <div class="card shadow h-100">
+                {% if hotel.hotel_image %}
+                 <img src="{{ hotel.hotel_image.url }}"
+                    class="card-img-top hotel-img">
+                {% else %}
+                 <img src="{% static 'no_photo.avif' %}"
+                    class="card-img-top hotel-img">
+                {% endif %}
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">
+                        <a href="{% url 'hotel_detail' hotel.id %}">{{ hotel.hotel_name }}</a>
+                    </h5>
+
+                    <p class="card-text">
+                        {{ hotel.hotel_description|truncatewords:15 }}
+                    </p>
+
+
+                    <div class="mb-2">
+
+                        <span class="badge bg-success">
+                            ₹{{ hotel.hotel_offer_price }}
+                        </span>
+
+
+                        <span class="badge bg-secondary">
+                            <del>₹{{ hotel.hotel_price }}</del>
+                        </span>
+
+                        <span class="badge bg-warning text-dark">
+                             {{ hotel.hotel_location }}
+                            {{ hotel.hotel_location }}
+                        </span>
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        {% for ameneti in hotel.hotel_ameneties.all %}
+
+                        <span class="badge bg-primary">
+                            {{ ameneti.amenetie_name }}
+                        </span>
+
+                        {% empty %}
+
+                        <span class="badge bg-danger">
+                            No Amenities
+                        </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                     <a href="{% url 'book_hotel' hotel.id %}" class="btn btn-primary mt-auto">
+                        Book Now
+                    </a>
+                
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+
+    <nav>
+        <ul class="pagination">
+
+            {% if hotels.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ hotels.previous_page_number }}">
+                    Previous
+                </a>
+            </li>
+            {% endif %}
+
+
+            {% for num in hotels.paginator.page_range %}
+
+                {% if hotels.number == num %}
+
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">
+                            {{ num }}
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            {% if hotels.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ hotels.next_page_number }}">
+                    Next
+                </a>
+            </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+
+</div>
+
+</div>
+
+{% endblock %}
+
+<style>
+.hotel-img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-top-left-radius:8px;
+border-top-right-radius:8px;
+}
+</style>

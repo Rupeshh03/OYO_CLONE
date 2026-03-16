@@ -1,0 +1,73 @@
+{% extends 'utils/vendor_base.html' %}
+{% block content %}
+{% csrf_token %}
+<div class="container mt-5 pt-5">
+<h3 class="mt-5 mb-3">Hotel Bookings</h3>
+
+    <div class="card shadow">
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Hotel</th>
+                        <th>User</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for booking in bookings %}
+
+                    <tr>
+                        <td>{{ booking.hotel.hotel_name }}</td>
+                        <td>{{ booking.booking_user }}</td>
+                        <td>{{ booking.booking_start_date }}</td>
+                        <td>{{ booking.booking_end_date }}</td>
+                        <td>₹{{ booking.price }}</td>
+                        <td>
+                            {% if booking.booking_status == "confirmed" %}
+                            <span class="badge bg-success">
+                                {{ booking.booking_status }}
+                            </span>
+                            {% elif booking.booking_status == "cancelled" %}
+                            <span class="badge bg-danger">
+                                {{ booking.booking_status }}
+                            </span>
+                            {% else %}
+                            <span class="badge bg-warning">
+                                {{ booking.booking_status }}
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No bookings found
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+    
+</div>
+{% endblock %}
+
+    <!-- ================= BOOKINGS ================= -->
+
+    
