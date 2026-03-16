@@ -78,7 +78,7 @@ oyo_clone
 
 
 ### Home Page
-![Home Page](screenshots\home.png)
+![Home Page](screenshots/home.png)
 
 ### Vendor Dashboard
 ![Hotel Listing](screenshots/vendor_dashboard.png)
